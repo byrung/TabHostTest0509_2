@@ -42,25 +42,26 @@ class MainActivity : AppCompatActivity(), ActionBar.TabListener {
     override fun onTabSelected(tab: ActionBar.Tab?, ft: FragmentTransaction?) {
         var fragment : MyFragment? = null
 
-        if(arrFrags[tab.position] == null) {
+        if(arrFrags[tab?.position ?: -1] == null) {
             fragment = MyFragment()
             val data = Bundle()
-            data.putString("tabName", tab.text.toString())
+            data.putString("tabName", tab?.text.toString())  // 안전한 호출을 통한 접근
             fragment.arguments = data
-            arrFrags[tab.position] = fragment
-        }else{
-            fragment = arrFrags[tab.position]
+            arrFrags[tab?.position ?: -1] = fragment
+        } else {
+            fragment = arrFrags[tab?.position ?: -1]
         }
 
-        ft!!.replace(android.R.id.content, fragment)
+        ft?.replace(android.R.id.content, fragment!!)  // 안전한 호출을 통한 접근
     }
 
+
     override fun onTabUnselected(tab: ActionBar.Tab?, ft: FragmentTransaction?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onTabReselected(tab: ActionBar.Tab?, ft: FragmentTransaction?) {
-        TODO("Not yet implemented")
+
     }
 
     class MyFragment : Fragment(){
